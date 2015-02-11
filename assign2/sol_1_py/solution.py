@@ -34,17 +34,28 @@ while temp != '':
 	temp = ''
 	temp = input.readline()
 
+#function on unsorted array
 def comparisons_quicksort(unsorted):
 	comparisons = quicksort_sub(unsorted, 0, len(unsorted)-1)
 	if comparisons < 0:
 		print "An error occurred during quicksort"
 	return comparisons
-
+#quicksort sub-routine
+#if min == max, then there's only 1 element being sorted and we return 0 comparisons
+#if min > max there was an error
+#else we choose a pivot.
+#replace pivot with the first element
+#set number of comparisons to be one less than the number of elements being sorted
+#set 2 counters j and i. j will point to the first unsorted element, i will point to the first element greater than the pivot
+#until we've compared all elements, 
+#if an element is smaller than the pivot we swap it with the first element that's bigger than the pivot and increment both counters
+#if an element is greater than the pivot we leave it where it is and increment the j counter
+#after we finish we swap the pivot element with the last element that's less than the pivot (which is at position -1)
 def quicksort_sub(unsorted, min, max):
 	if min == max:
 		return 0
 	elif min > max:
-		return 0
+		return -1
 	else:
 		pivot = pivot_three(unsorted, min, max)
 		if pivot != min:
@@ -63,14 +74,18 @@ def quicksort_sub(unsorted, min, max):
 				j+=1
 		unsorted[min], unsorted[i-1] = unsorted[i-1], unsorted[pivot]
 		pivot = i - 1
-		comparisons += (quicksort_sub(unsorted, min, pivot-1) + quicksort_sub(unsorted, pivot+1, max))
+		if(pivot > min):
+			comparisons += quicksort_sub(unsorted, min, pivot-1) 
+		if(pivot < max):
+			comparisons += quicksort_sub(unsorted, pivot+1, max)
 		return comparisons
-
+#choose first element as pivot
 def pivot_one(unsorted, min, max):
 	return min
-
+#choose last element as pivot
 def pivot_two(unsorted, min, max):
 	return max
+#choose the median of the first, last and middle elements as pivot
 def pivot_three(unsorted, min, max):
 	middle = (max+min)/2
 	if unsorted[max] >= unsorted[min]:

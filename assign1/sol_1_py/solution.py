@@ -40,6 +40,22 @@ def inversion_merge_sort(unsorted):
 		print "An error occurred during merge sort\n"
 	return inversions
 
+#merge_subroutine
+#set number of versions to 0
+#if min == max, then there's only 1 element to be sorted, which is the base case so you return the 0 inversions
+#if min > max there was an error
+#else create an empty temp list
+#the number of inversions get added from the 2 recursive calls on the two halves of the list.
+#the first half is from min to min + (max-min)/2
+#the second half is from min + (max-min)/2 + 1 to max
+#set the left and right pointers to the first elements of their respective halves of the list
+#until either of the pointers exceed their bounds
+#if the left side is bigger than the right, then you append the right pointer to the temp stack, 
+#increment the right pointer and add number of inversions equal to number of elements from the left side that still haven't been added.
+#otherwise, you append the element from the left side and increment the left counter
+#when the loop is done if it's the right side that exceeded its max we append the remainder of the left elements onto the temporary list
+#if it's the left pointer that exceeded its max we don't have to do anything
+#then we replace the corresponding segment of the list with the temporary list that has the sorted elements
 def merge_sub(unsorted, min, max):
 	inversions = 0
 	if min == max:
